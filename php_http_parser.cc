@@ -40,7 +40,7 @@ zend_class_entry *http_parser_ce;
 static zend_object_handlers http_parser_handlers;
 
 static inline http_parser_t *php_http_parser_fetch_object(zend_object *obj) {
-    return (http_parser_t *) ((char *) obj - http_parser_handlers.offset);
+    return reinterpret_cast<http_parser_t *>((reinterpret_cast<char *>(obj) - http_parser_handlers.offset));
 }
 
 static zend_object *php_http_parser_create_object(zend_class_entry *ce) {
