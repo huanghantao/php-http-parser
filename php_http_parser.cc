@@ -71,9 +71,16 @@ PHP_RINIT_FUNCTION(php_http_parser) {
 /* {{{ PHP_MINFO_FUNCTION
  */
 PHP_MINFO_FUNCTION(php_http_parser) {
+    char buf[64];
+
     php_info_print_table_start();
-    php_info_print_table_header(2, "php_http_parser support", "enabled");
+    php_info_print_table_header(2, "Http Parser support", "enabled");
+    php_info_print_table_row(2, "Author", "Codinghuang <https://github.com/huanghantao>");
+    php_info_print_table_row(2, "Version", PHP_HTTP_PARSER_VERSION);
+    snprintf(buf, sizeof(buf), "%s %s", __DATE__, __TIME__);
+    php_info_print_table_row(2, "Built", buf);
     php_info_print_table_end();
+    DISPLAY_INI_ENTRIES();
 }
 /* }}} */
 
