@@ -83,6 +83,24 @@ static PHP_METHOD(http_request_parser, parse) {
     RETURN_LONG(nparsed);
 }
 
+static PHP_METHOD(http_request_parser, getMethod) {
+    Ctx *ctx = php_http_request_parser_get_ptr(ZEND_THIS);
+
+    RETURN_STRINGL(ctx->request->method.c_str(), ctx->request->method.length());
+}
+
+static PHP_METHOD(http_request_parser, getURL) {
+    Ctx *ctx = php_http_request_parser_get_ptr(ZEND_THIS);
+
+    RETURN_STRINGL(ctx->request->path, ctx->request->path_len);
+}
+
+static PHP_METHOD(http_request_parser, getVersion) {
+    Ctx *ctx = php_http_request_parser_get_ptr(ZEND_THIS);
+
+    RETURN_LONG(ctx->request->version);
+}
+
 static PHP_METHOD(http_request_parser, getHeaders) {
     Ctx *ctx = php_http_request_parser_get_ptr(ZEND_THIS);
 
@@ -102,9 +120,13 @@ static PHP_METHOD(http_request_parser, getBody) {
 
 static const zend_function_entry http_request_parser_methods[] = {
     PHP_ME(http_request_parser, __construct, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-        PHP_ME(http_request_parser, parse, arginfo_http_request_parser_parse, ZEND_ACC_PUBLIC)
-            PHP_ME(http_request_parser, getHeaders, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-                PHP_ME(http_request_parser, getBody, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC) PHP_FE_END};
+    PHP_ME(http_request_parser, parse, arginfo_http_request_parser_parse, ZEND_ACC_PUBLIC)
+    PHP_ME(http_request_parser, getMethod, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+    PHP_ME(http_request_parser, getURL, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+    PHP_ME(http_request_parser, getVersion, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+    PHP_ME(http_request_parser, getHeaders, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+    PHP_ME(http_request_parser, getBody, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC) PHP_FE_END
+};
 
 void php_http_request_parser_minit(int module_number) {
     HTTP_PARSER_INIT_CLASS_ENTRY(http_request_parser, "Http\\Request\\Parser", NULL, NULL, http_request_parser_methods);
