@@ -18,10 +18,12 @@
 #ifndef PHP_HTTP_PARSER_H_
 #define PHP_HTTP_PARSER_H_
 
+#define PHP_HTTP_PARSER_VERSION "0.1.0"
+
 extern zend_module_entry http_parser_module_entry;
 #define phpext_php_http_parser_ptr &http_parser_module_entry
 
-#define PHP_HTTP_PARSER_VERSION "0.1.0"
+void php_http_request_parser_minit(int module_number);
 
 #define php_http_parser_array_get_value(ht, str, v) ((v = zend_hash_str_find(ht, str, sizeof(str)-1)) && !ZVAL_IS_NULL(v))
 

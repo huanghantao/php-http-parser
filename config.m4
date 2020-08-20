@@ -63,7 +63,12 @@ if test "$PHP_PHP_HTTP_PARSER" != "no"; then
 
   php_http_parser_file="\
     php_http_parser.cc \
-    thirdparty/http/http_parser.c
+    php_http_request_parser.cc \
+  "
+
+  php_http_parser_file="\
+    $php_http_parser_file \
+    thirdparty/http/http_parser.c \
   "
 
   PHP_NEW_EXTENSION(http_parser, $php_http_parser_file, $ext_shared,,, cxx)
