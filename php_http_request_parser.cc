@@ -47,12 +47,15 @@ static zend_object *php_http_request_parser_create_object(zend_class_entry *ce) 
     zend_object_std_init(&http_request_parser->std, ce);
     object_properties_init(&http_request_parser->std, ce);
     http_request_parser->std.handlers = &http_request_parser_handlers;
+
+    http_request_parser->ctx = new Ctx();
     return &http_request_parser->std;
 }
 
 static void php_http_request_parser_free_object(zend_object *object) {
     http_request_parser_t *http_request_parser =
         reinterpret_cast<http_request_parser_t *>(php_http_request_parser_fetch_object(object));
+    delete http_request_parser->ctx;
     zend_object_std_dtor(&http_request_parser->std);
 }
 
@@ -62,7 +65,6 @@ static Ctx *php_http_request_parser_get_ptr(zval *zobject) {
 
 static PHP_METHOD(http_request_parser, __construct) {
     http_request_parser_t *request_parser = php_http_request_parser_fetch_object(Z_OBJ_P(ZEND_THIS));
-    request_parser->ctx = new Ctx();
 
     http_parser_init(&request_parser->ctx->parser, HTTP_REQUEST);
 }
@@ -120,13 +122,13 @@ static PHP_METHOD(http_request_parser, getBody) {
 
 static const zend_function_entry http_request_parser_methods[] = {
     PHP_ME(http_request_parser, __construct, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-    PHP_ME(http_request_parser, parse, arginfo_http_request_parser_parse, ZEND_ACC_PUBLIC)
-    PHP_ME(http_request_parser, getMethod, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-    PHP_ME(http_request_parser, getURL, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-    PHP_ME(http_request_parser, getVersion, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-    PHP_ME(http_request_parser, getHeaders, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
-    PHP_ME(http_request_parser, getBody, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC) PHP_FE_END
-};
+        PHP_ME(http_request_parser, parse, arginfo_http_request_parser_parse, ZEND_ACC_PUBLIC)
+            PHP_ME(http_request_parser, getMethod, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+                PHP_ME(http_request_parser, getURL, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+                    PHP_ME(http_request_parser, getVersion, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+                        PHP_ME(http_request_parser, getHeaders, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+                            PHP_ME(http_request_parser, getBody, arginfo_http_request_parser_void, ZEND_ACC_PUBLIC)
+                                PHP_FE_END};
 
 void php_http_request_parser_minit(int module_number) {
     HTTP_PARSER_INIT_CLASS_ENTRY(http_request_parser, "Http\\Request\\Parser", NULL, NULL, http_request_parser_methods);
