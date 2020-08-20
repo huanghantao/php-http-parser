@@ -1,0 +1,7 @@
+ARG_ENABLE('php-http-parser', 'php-http-parser support', 'no');
+
+if (PHP_PHP-HTTP-PARSER != 'no') {
+	AC_DEFINE('HAVE_PHP-HTTP-PARSER', 1, 'php-http-parser support enabled');
+
+	EXTENSION('php-http-parser', 'php-http-parser.c', null, '/DZEND_ENABLE_STATIC_TSRMLS_CACHE=1');
+}
