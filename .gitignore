@@ -36,3 +36,6 @@ tests/*/*.sh
 
 # IDE
 /.vscode
+
+# test
+test.php
