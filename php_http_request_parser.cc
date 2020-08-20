@@ -90,7 +90,7 @@ static PHP_METHOD(http_request_parser, getHeaders) {
 
     for (auto iter = ctx->request->header.begin(); iter != ctx->request->header.end(); iter++) {
         add_assoc_stringl_ex(
-            return_value, iter->first.c_str(), iter->first.length(), (char *) iter->second.c_str(), iter->second.length());
+            return_value, iter->first.c_str(), iter->first.length(), iter->second.c_str(), iter->second.length());
     }
     RETURN_ARR(Z_ARRVAL_P(return_value));
 }
