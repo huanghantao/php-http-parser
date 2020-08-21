@@ -10,9 +10,9 @@ jobs:
     - name: configure
       run: phpize && ./configure
     - name: make && make install
-      run: make -j$(sysctl -n hw.ncpu) && make install
+      run: make -j$(sysctl -n hw.ncpu) && sudo make install
     - name: run test
-      run: cd tests && ./start.sh
+      run: export TEST_PHP_ARGS="-d zend_extension=http_parser.so && cd tests && ./start.sh
 
   build-ubuntu-old:
     runs-on: ubuntu-16.04
@@ -21,9 +21,9 @@ jobs:
     - name: configure
       run: phpize && ./configure
     - name: make && make install
-      run: make -j$(sysctl -n hw.ncpu) && make install
+      run: make -j$(sysctl -n hw.ncpu) && sudo make install
     - name: run test
-      run: cd tests && ./start.sh
+      run: export TEST_PHP_ARGS="-d zend_extension=http_parser.so && cd tests && ./start.sh
 
   build-macos-latest:
     runs-on: macos-latest
@@ -32,6 +32,6 @@ jobs:
     - name: configure
       run: phpize && ./configure
     - name: make && make install
-      run: make -j$(sysctl -n hw.ncpu) && make install
+      run: make -j$(sysctl -n hw.ncpu) && sudo make install
     - name: run test
-      run: cd tests && ./start.sh
+      run: export TEST_PHP_ARGS="-d zend_extension=http_parser.so && cd tests && ./start.sh
