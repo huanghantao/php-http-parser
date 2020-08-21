@@ -1,0 +1,31 @@
+name: ext-http-parser
+
+on: [push, pull_request]
+
+jobs:
+  build-ubuntu-latest:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: configure
+      run: phpize && ./configure
+    - name: make
+      run: make -j$(sysctl -n hw.ncpu)
+
+  build-ubuntu-old:
+    runs-on: ubuntu-16.04
+    steps:
+    - uses: actions/checkout@v1
+    - name: configure
+      run: phpize && ./configure
+    - name: make
+      run: make -j$(sysctl -n hw.ncpu)
+
+  build-macos-latest:
+    runs-on: macos-latest
+    steps:
+    - uses: actions/checkout@v1
+    - name: configure
+      run: phpize && ./configure
+    - name: make -j$(sysctl -n hw.ncpu)
+      run: make
