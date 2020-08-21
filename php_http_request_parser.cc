@@ -14,8 +14,8 @@
  * limitations under the License.
  */
 
-#include "php/main/php.h"
-#include "php/ext/standard/info.h"
+#include "main/php.h"
+#include "ext/standard/info.h"
 #include "./php_http_parser.h"
 #include "include/context.h"
 
