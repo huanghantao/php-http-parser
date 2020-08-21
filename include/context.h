@@ -17,6 +17,7 @@
 
 #include <map>
 #include <string>
+#include <algorithm>
 
 #include "include/http_parser.h"
 
