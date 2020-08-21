@@ -1,0 +1,14 @@
+--TEST--
+{{test_name}}: {{test_intro}}
+--SKIPIF--
+<?php
+if (!extension_loaded('http_parser')) {
+	echo 'skip';
+}
+?>
+--FILE--
+<?php
+require __DIR__ . '/../include/bootstrap.php';
+
+?>
+--EXPECT--
