@@ -46,7 +46,9 @@ PHP_MINFO_FUNCTION(http_parser) {
     DISPLAY_INI_ENTRIES();
 }
 
-static const zend_function_entry http_parser_functions[] = {};
+static const zend_function_entry http_parser_functions[] = {
+    PHP_FE_END
+};
 
 zend_module_entry http_parser_module_entry = {STANDARD_MODULE_HEADER,
                                               "http_parser",           /* Extension name */
